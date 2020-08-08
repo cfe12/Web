@@ -19,7 +19,6 @@
              {{title}}</div> 
     </mt-header>
     <ul
-    v-infinite-scroll="loadMore"
     infinite-scroll-disabled="loading"
     infinite-scroll-distance="10"
     style="list-style: none;"
@@ -49,6 +48,7 @@
       mounted(){
         this.$nextTick(function(){
             document.title =this.title
+            this.loadMore()
         })     
       },       
       methods: {
