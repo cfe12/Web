@@ -1,17 +1,79 @@
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CFE</title>
+  <meta charset="UTF-8">
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
 </head>
-
+<style>
+    .mint-button--default{
+        box-shadow:none;
+        margin-bottom: 10px;
+    }
+</style>
 <body>
-
-    <div id="app">
-       <a href="https://8327201b260f.ngrok.io/index2.html">扫一描</a>
-    </div>
-
+  <div id="app">
+    <mt-header> 
+        <div slot="left">
+            <img :src=getLogo() height="20">
+             {{title}}</div> 
+    </mt-header>
+    <ul
+    v-infinite-scroll="loadMore"
+    infinite-scroll-disabled="loading"
+    infinite-scroll-distance="10"
+    style="list-style: none;"
+    >
+    <li v-for="item in list">
+        <mt-button size="large" @click.native="handleClick(item.url)">
+            <img :src=item.image height="20"  slot="icon"> {{item.text}}
+        </mt-button>
+    </li>
+    </ul>    
+  </div>
 </body>
-
+  <!-- 先引入 Vue -->
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+  <script>
+    
+    new Vue({
+      el: '#app',
+      data:{
+          clientURL:'https://647cb222f098.ngrok.io',
+          serverURL:'https://cfe12.github.io/Web/',
+          title:'东莞市川富电子有限公司 Web Tool (ver:1.0.0.1)',
+          list:[]
+      },
+      mounted(){
+        this.$nextTick(function(){
+            document.title =this.title
+        })     
+      },       
+      methods: {
+        getLogo:function(){
+            return this.serverURL+'cfe.png'
+        },
+        handleClick: function(url) {
+            if(url !== null ){
+                window.location.href=url
+            }          
+        },
+        loadMore() {
+            alert(this.serverURL)
+            this.list.push({
+                url:this.clientURL,
+                image:this.serverURL+'Scan.png',
+                text:'设备资产编号查询'
+            });
+            this.list.push({
+                url:this.clientURL,
+                image:this.serverURL+'Scan.png',
+                text:'设备资产编号查询'
+            });
+        }
+      }
+    })
+  </script>
 </html>
